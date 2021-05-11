@@ -1,14 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '*',
+    redirect: '/login'
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: Home
+    component: () => import('@/layouts/default'),
+    children: [
+      {
+        path: '',
+        redirect: '/dashboard'
+      },
+      {
+        name: 'dashboard',
+        path: '/dashboard',
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   }
 ]
 
