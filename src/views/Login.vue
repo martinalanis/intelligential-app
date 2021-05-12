@@ -3,47 +3,53 @@
     <div class="columns is-centered is-vcentered h-100">
       <div class="column is-4">
         <h4 class="has-text-grey">Panel de Administración</h4>
-        <h1 class="title has-text-primary-dark is-text mb-5">INTELLIGENTIAL APP</h1>
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              <p>
-                Ingrese sus datos
-              </p>
-              <form @submit.prevent="submit">
-                <input-field
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="admin@example.com"
-                  icon="envelope"
-                  :loading="loading"
-                  required
-                />
-                <input-field
-                  name="password"
-                  label="Password"
-                  :type="!showPassword ? 'password' : 'text'"
-                  placeholder="******"
-                  icon="lock"
-                  :loading="loading"
-                  required
-                />
-                <checkbox-field
-                  v-model="showPassword"
-                  label="Mostrar contraseña"
-                />
-                <button
-                  type="submit"
-                  class="button is-primary mt-2"
-                  :class="{ 'is-loading': loading }"
-                >
-                  INGRESAR
-                </button>
-              </form>
-            </div>
+        <h1 class="title has-text-primary-dark mb-5">INTELLIGENTIAL APP</h1>
+        <form
+          class="box content"
+          @submit.prevent="submit"
+        >
+          <p>
+            Ingrese sus datos
+          </p>
+          <input-field
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="admin@example.com"
+            icon="envelope"
+            :loading="loading"
+            required
+          />
+          <input-field
+            name="password"
+            label="Password"
+            :type="!showPassword ? 'password' : 'text'"
+            placeholder="******"
+            icon="lock"
+            :loading="loading"
+            required
+          />
+          <checkbox-field
+            v-model="showPassword"
+            label="Mostrar contraseña"
+          />
+          <div
+            v-if="error"
+            class="alert error mb-2"
+          >
+            {{ error }}
           </div>
-        </div>
+          <button
+            type="submit"
+            class="button is-primary mt-2"
+            :class="{ 'is-loading': loading }"
+          >
+            INGRESAR
+          </button>
+        </form>
+        <p class="is-italic is-size-7 mb-3">
+          * Todos los campos son requeridos
+        </p>
         <div
           class="is-italic mt-6 is-size-7 has-text-centered"
           v-if="!hideInitializeButton"
@@ -76,7 +82,8 @@ export default {
   data () {
     return {
       loading: false,
-      showPassword: false
+      showPassword: false,
+      error: ''
     }
   },
   created () {
@@ -96,9 +103,9 @@ export default {
       this.loading = true
       try {
         await this.login(form)
+        this.error = ''
       } catch ({ message }) {
-        // console.log()
-        console.log(message)
+        this.error = message
       } finally {
         this.loading = false
       }
