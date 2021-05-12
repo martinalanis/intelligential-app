@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import router from '@/router'
 import { User } from '@/api'
 
 const set = key => (state, payload) => {
@@ -14,6 +15,9 @@ export default {
   getters: {
     isLogged (state) {
       return !!state.sessionToken
+    },
+    user (state) {
+      return state.user
     }
   },
   mutations: {
@@ -33,6 +37,12 @@ export default {
       }
       Cookies.set('it_session', token, params)
       commit('setToken', token)
+    },
+    logout ({ commit }) {
+      commit('setUser', {})
+      commit('setToken', '')
+      Cookies.remove('it_session')
+      router.go()
     }
   }
 }
