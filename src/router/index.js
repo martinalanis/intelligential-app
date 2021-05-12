@@ -20,17 +20,26 @@ const routes = [
       {
         name: 'dashboard',
         path: '/dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard')
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard'),
+        meta: {
+          role: 'administrador'
+        }
       },
       {
         name: 'usuarios',
         path: '/usuarios',
-        component: () => import(/* webpackChunkName: "usuarios" */ '@/views/Usuarios')
+        component: () => import(/* webpackChunkName: "usuarios" */ '@/views/Usuarios'),
+        meta: {
+          role: 'administrador'
+        }
       },
       {
         name: 'solicitudes',
         path: '/solicitudes',
-        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/Solicitudes')
+        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/Solicitudes'),
+        meta: {
+          role: 'cliente'
+        }
       }
     ],
     meta: {
@@ -52,22 +61,60 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const isLogged = store.getters['auth/isLogged']
+  const userRole = store.getters['auth/userRole']
   const authorization = to.matched.some(record => record.meta.requiresAuth)
+  const hasPermission = to.matched.some(record => record.meta.role === userRole)
+  console.log(to.matched)
+  console.log('user role', userRole)
+  const goToLogin = to.name === 'login'
+
+  // if (
+  //   (!authorization) ||
+  //   (!authorization && isLogged && !goToLogin) ||
+  //   (authorization && isLogged && !goToLogin && hasPermission)
+  // ) {
+  //   next()
+  //   return
+  // }
+
+  // if (
+  //   (authorization && isLogged && !hasPermission) ||
+  //   (isLogged && goToLogin)
+  // ) {
+  //   next({ name: 'dashboard' })
+  // } else if (authorization && !isLogged) {
+  //   next({ name: 'login' })
+  // } else {
+  //   next()
+  // }
 
   if (authorization && !isLogged) {
-    // redirect to login if tries enter into a protected route without been logged in
     next({ name: 'login' })
-  } else if (!authorization && isLogged) {
-    // redirect to home if is already logged in and tries to go to login
-    next('dashboard')
+  } else if (
+    (authorization && isLogged && !hasPermission) ||
+    (isLogged && goToLogin)
+  ) {
+    next({ name: 'dashboard' })
   } else {
-    /**
-     * 2 posibles cases:
-     * Tries to go to protected route and is logged in
-     * Tries to go to login and isn't logged in
-     */
     next()
   }
+
+  // if (authorization && !isLogged) {
+  //   // redirect to login if tries enter into a protected route without been logged in
+  //   next({ name: 'login' })
+  // } else if (!authorization && isLogged) {
+  //   // redirect to home if is already logged in and tries to go to login
+  //   next('dashboard')
+  // } else {
+  //   /**
+  //    * 2 posibles cases:
+  //    * Tries to go to protected route and is logged in
+  //    * Tries to go to login and isn't logged in
+  //    */
+  //   next()
+  // }
 })
+
+// const hasPermission = ()
 
 export default router

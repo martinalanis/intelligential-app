@@ -24,7 +24,7 @@ export default new Vuex.Store({
       dispatch('checkDatabase')
     },
     checkDatabase ({ commit }) {
-      commit('setHideInitializeButton', !!JSON.parse(localStorage.getItem('intelligentialDB'))?.administradores)
+      commit('setHideInitializeButton', !!JSON.parse(localStorage.getItem('intelligentialDB'))?.users)
     }
   },
   modules: {

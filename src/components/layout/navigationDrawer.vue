@@ -10,8 +10,8 @@
         <h3 class="name">
           {{ user.name }}
         </h3>
-        <p class="email">
-          {{ user.email }}
+        <p class="role">
+          {{ user.role }}
         </p>
       </div>
     </header>
@@ -123,9 +123,10 @@ export default {
         font-weight: 600;
         color: #f2f2f2;
       }
-      .email {
+      .role {
         color: #FFFFFF90;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        text-transform: capitalize;
       }
     }
   }

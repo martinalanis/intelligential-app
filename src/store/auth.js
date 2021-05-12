@@ -6,11 +6,20 @@ const set = key => (state, payload) => {
   state[key] = payload
 }
 
+const getUserRoleFromCookie = () => {
+  const cookie = Cookies.get('it_session')
+  if (cookie) {
+    return Cookies.get('it_session').split('-')[1]
+  }
+  return ''
+}
+
 export default {
   namespaced: true,
   state: {
     sessionToken: Cookies.get('it_session') || '',
-    user: {}
+    user: {},
+    userRole: getUserRoleFromCookie()
   },
   getters: {
     isLogged (state) {
@@ -18,16 +27,21 @@ export default {
     },
     user (state) {
       return state.user
+    },
+    userRole (state) {
+      return state.userRole || ''
     }
   },
   mutations: {
     setUser: set('user'),
-    setToken: set('sessionToken')
+    setToken: set('sessionToken'),
+    setRole: set('userRole')
   },
   actions: {
     async login ({ commit, dispatch }, form) {
       const { user, sessionToken } = await User.login(form)
       commit('setUser', user)
+      commit('setRole', user.role)
       dispatch('setSessionToken', sessionToken)
       return user
     },
@@ -42,6 +56,7 @@ export default {
       const id = parseInt(Cookies.get('it_session').split('-')[0])
       const user = await User.getUser(id)
       commit('setUser', user)
+      commit('setRole', user.role)
     },
     logout ({ commit }) {
       commit('setUser', {})
