@@ -104,6 +104,7 @@ export default {
       try {
         await this.login(form)
         this.error = ''
+        this.$router.push({ name: 'dashboard' })
       } catch ({ message }) {
         this.error = message
       } finally {
@@ -116,7 +117,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

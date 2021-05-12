@@ -1,6 +1,13 @@
 const userFindOrFail = ({ email, password }) => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-  return DB.administradores.filter(el => el.email === email && el.password === password)[0]
+  const user = DB.administradores.filter(el => el.email === email && el.password === password)[0]
+  if (user) {
+    return {
+      name: user?.name,
+      email: user?.email
+    }
+  }
+  return false
 }
 
 export default {
