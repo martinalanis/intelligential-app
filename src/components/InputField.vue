@@ -7,7 +7,7 @@
     >
       {{ label }}:
     </label>
-    <div class="control" :class="{ 'has-icons-left': icon }">
+    <div class="control" :class="{ 'has-icons-left': icon, 'is-loading': loading }">
       <input
         :id="label"
         :type="type"
@@ -15,6 +15,7 @@
         :name="name"
         class="input"
         :required="required"
+        :disabled="loading"
       />
       <span v-if="icon" class="icon is-left">
         <fa-icon :icon="icon"/>
@@ -48,6 +49,10 @@ export default {
       default: ''
     },
     required: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
       type: Boolean,
       default: false
     }

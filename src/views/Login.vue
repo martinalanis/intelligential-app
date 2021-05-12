@@ -17,19 +17,26 @@
                   type="email"
                   placeholder="admin@example.com"
                   icon="envelope"
+                  :loading="loading"
                   required
                 />
                 <input-field
                   name="password"
                   label="Password"
-                  type="password"
+                  :type="!showPassword ? 'password' : 'text'"
                   placeholder="******"
                   icon="lock"
+                  :loading="loading"
                   required
                 />
+                <checkbox-field
+                  v-model="showPassword"
+                  label="Mostrar contraseña"
+                />
                 <button
-                  class="button is-primary mt-3"
                   type="submit"
+                  class="button is-primary mt-2"
+                  :class="{ 'is-loading': loading }"
                 >
                   INGRESAR
                 </button>
@@ -42,11 +49,11 @@
           v-if="!hideInitializeButton"
         >
           <p>
-            ¿Restaurar administradores por defecto?
+            Inicializar administradores por defecto?
           </p>
           <a
             @click.prevent="loadInitialDb">
-            Restaurar
+            Inicializar
           </a>
         </div>
       </div>
@@ -58,15 +65,18 @@
 import db from '@/db.json'
 import { mapActions, mapState } from 'vuex'
 import InputField from '@/components/InputField'
+import CheckboxField from '@/components/CheckboxField'
 
 export default {
   name: 'Login',
   components: {
-    InputField
+    InputField,
+    CheckboxField
   },
   data () {
     return {
-      form: null
+      loading: false,
+      showPassword: false
     }
   },
   created () {
@@ -76,11 +86,22 @@ export default {
     ...mapState(['hideInitializeButton'])
   },
   methods: {
-    ...mapActions(['initDB', 'checkDatabase']),
-    submit (event) {
-      console.log(event.target)
+    ...mapActions({
+      initDB: 'initDB',
+      checkDatabase: 'checkDatabase',
+      login: 'auth/login'
+    }),
+    async submit (event) {
       const form = Object.fromEntries(new FormData(event.target))
-      console.log(form)
+      this.loading = true
+      try {
+        await this.login(form)
+      } catch ({ message }) {
+        // console.log()
+        console.log(message)
+      } finally {
+        this.loading = false
+      }
     },
     loadInitialDb () {
       this.initDB(db)
