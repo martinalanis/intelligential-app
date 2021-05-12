@@ -22,10 +22,10 @@ export default {
   },
   actions: {
     async login ({ commit, dispatch }, form) {
-      const res = await User.login(form)
-      commit('setUser', res)
-      dispatch('setSessionToken', Date.now().toString())
-      return res
+      const { user, sessionToken } = await User.login(form)
+      commit('setUser', user)
+      dispatch('setSessionToken', sessionToken)
+      return user
     },
     setSessionToken ({ commit }, token) {
       const params = {

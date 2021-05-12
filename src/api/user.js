@@ -3,8 +3,11 @@ const userFindOrFail = ({ email, password }) => {
   const user = DB.administradores.filter(el => el.email === email && el.password === password)[0]
   if (user) {
     return {
-      name: user?.name,
-      email: user?.email
+      user: {
+        name: user?.name,
+        email: user?.email
+      },
+      sessionToken: Date.now().toString()
     }
   }
   return false
