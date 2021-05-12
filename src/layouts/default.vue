@@ -10,11 +10,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import NavigationDrawer from '@/components/layout/navigationDrawer'
 export default {
   name: 'DefaultLayout',
   components: {
     NavigationDrawer
+  },
+  async created () {
+    await this.getUser()
+  },
+  methods: {
+    ...mapActions({
+      getUser: 'auth/getUser'
+    })
   }
 }
 </script>

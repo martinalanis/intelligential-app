@@ -38,6 +38,11 @@ export default {
       Cookies.set('it_session', token, params)
       commit('setToken', token)
     },
+    async getUser ({ commit }) {
+      const id = parseInt(Cookies.get('it_session').split('-')[0])
+      const user = await User.getUser(id)
+      commit('setUser', user)
+    },
     logout ({ commit }) {
       commit('setUser', {})
       commit('setToken', '')
