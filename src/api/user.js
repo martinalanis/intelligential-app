@@ -1,3 +1,5 @@
+const DB_NOT_FOUND = 'Base de datos de usuarios no encontrada'
+
 const userFindByCredentials = ({ email, password }) => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
   const user = DB.users.filter(el => el.email === email && el.password === password)[0]
@@ -32,8 +34,8 @@ const DOUser = (user) => {
 export default {
   login: async (form) => {
     return new Promise((resolve, reject) => {
-      const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-      if (DB?.users) {
+      const { users } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
+      if (users) {
         setTimeout(() => {
           const user = userFindByCredentials(form)
           if (user) {
@@ -42,14 +44,14 @@ export default {
           reject(new Error('Credenciales incorrectas'))
         }, 500)
       } else {
-        reject(new Error('Base de datos de usuarios no encontrada'))
+        reject(new Error(DB_NOT_FOUND))
       }
     })
   },
   getUser: async (id) => {
     return new Promise((resolve, reject) => {
-      const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-      if (DB?.users) {
+      const { users } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
+      if (users) {
         setTimeout(() => {
           const user = userFindOrFail(id)
           if (user) {
@@ -58,7 +60,19 @@ export default {
           reject(new Error('Credenciales incorrectas'))
         }, 500)
       } else {
-        reject(new Error('Base de datos de usuarios no encontrada'))
+        reject(new Error(DB_NOT_FOUND))
+      }
+    })
+  },
+  all: async () => {
+    return new Promise((resolve, reject) => {
+      const { users } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
+      if (users) {
+        setTimeout(() => {
+          resolve(users)
+        }, 500)
+      } else {
+        reject(new Error(DB_NOT_FOUND))
       }
     })
   }

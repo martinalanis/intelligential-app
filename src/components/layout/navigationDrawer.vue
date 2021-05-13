@@ -15,7 +15,7 @@
         </p>
       </div>
     </header>
-    <div class="menu__content">
+    <div class="menu__content px-2">
       <ul class="menu-list">
         <li
           v-for="({ to, icon, name }, i) in links"
@@ -24,9 +24,9 @@
           <router-link
             class="py-3"
             :to="to"
-            :class="{ 'active': $route.name === name.toLowerCase() }"
+            :class="{ 'active has-background-primary': $route.name === name.toLowerCase() }"
           >
-            <fa-icon :icon="icon" class="mr-4" />
+            <fa-icon :icon="icon" class="mr-5" />
             {{ name }}
           </router-link>
         </li>
@@ -110,7 +110,7 @@ export default {
     padding: 1rem;
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
+    // margin-bottom: 1.5rem;
     background: #01579b;
     &-image {
       width: 40px;
@@ -121,10 +121,10 @@ export default {
       .name {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #f2f2f2;
+        color: #FFF;
       }
       .role {
-        color: #FFFFFF90;
+        color: #e2e2e2;
         font-size: 0.85rem;
         text-transform: capitalize;
       }
@@ -132,10 +132,19 @@ export default {
   }
   &__content {
     flex: 1;
-  }
-  .active {
-    background: #f2f2f2;
-    font-weight: 600;
+    padding-top: 1.5rem;
+    background: #FFF;
+    a {
+      color: #545657;
+      font-weight: 500;
+      font-size: 1rem;
+      // padding-left: 1rem;
+      // padding-right: 1rem;
+      &.active {
+        color: #ffffff;
+        // background: lighten(purple, 15%);
+      }
+    }
   }
 }
 </style>

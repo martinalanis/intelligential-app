@@ -2,8 +2,8 @@
   <div class="container h-full">
     <div class="columns is-centered is-vcentered h-100">
       <div class="column is-4">
-        <h4 class="has-text-grey">Panel de Administración</h4>
-        <h1 class="title has-text-primary-dark mb-5">INTELLIGENTIAL APP</h1>
+        <h4 class="has-text-grey">Finantial App</h4>
+        <h1 class="title has-text-primary-dark mb-5">INTELLIGENTIAL</h1>
         <form
           class="box content"
           @submit.prevent="submit"
@@ -70,8 +70,8 @@
 <script>
 import db from '@/db.json'
 import { mapActions, mapState } from 'vuex'
-import InputField from '@/components/InputField'
-import CheckboxField from '@/components/CheckboxField'
+import InputField from '@/components/inputField'
+import CheckboxField from '@/components/checkboxField'
 
 export default {
   name: 'Login',
