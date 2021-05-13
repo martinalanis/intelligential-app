@@ -5,7 +5,8 @@
       "name": "Admin",
       "email": "admin@example.com",
       "password": "123456",
-      "role": "administrador"
+      "role": "administrador",
+      "status": 1
     }
   ]
 }
