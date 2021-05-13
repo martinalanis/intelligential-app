@@ -1,22 +1,26 @@
 <template>
   <div>
-    <h1 class="title">
-      Usuarios
-    </h1>
     <div class="columns">
-      <div class="column is-7">
-        <users-list />
+      <div class="column">
+        <h1 class="title mb-5">
+          Usuarios
+        </h1>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-12">
+        <users-table />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import UsersList from '../modules/users/usersList'
+import UsersTable from '../modules/users/usersTable'
 export default {
   name: 'Usuarios',
   components: {
-    UsersList
+    UsersTable
   }
 }
 </script>
