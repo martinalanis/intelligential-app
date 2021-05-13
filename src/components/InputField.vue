@@ -62,11 +62,11 @@ export default {
 
 <style lang="scss" scoped>
 label {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: #646568;
 }
 </style>

@@ -31,9 +31,6 @@
           </router-link>
         </li>
       </ul>
-      <!-- <p class="menu-label">
-        Administration
-      </p> -->
     </div>
     <div class="menu__footer">
       <button
@@ -111,7 +108,7 @@ export default {
     display: flex;
     align-items: center;
     // margin-bottom: 1.5rem;
-    background: #01579b;
+    background: $blue-darken;
     &-image {
       width: 40px;
       margin-right: 1rem;

@@ -75,5 +75,32 @@ export default {
         reject(new Error(DB_NOT_FOUND))
       }
     })
+  },
+  getForm: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(require('@/forms/user.js').default)
+      }, 500)
+    })
+  },
+  save: async (form) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
+          form.role = 'administrador'
+          form.status = 1
+          DB.users.push(form)
+        } else {
+          DB.users = form
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
   }
 }

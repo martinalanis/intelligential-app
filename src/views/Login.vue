@@ -9,7 +9,7 @@
           @submit.prevent="submit"
         >
           <p>
-            Ingrese sus datos
+            Ingresa tus datos
           </p>
           <input-field
             name="email"
