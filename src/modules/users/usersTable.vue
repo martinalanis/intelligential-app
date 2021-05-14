@@ -15,14 +15,33 @@
         </button>
       </div>
     </div>
-    <div class="list-container">
-      <div class="columns is-multiline">
-        <div
-          class="column is-12 py-0"
-          v-for="(user, i) in users"
-          :key="i"
-        >
-          <user-details :user="user" />
+    <div class="list">
+      <div
+        v-for="(user, i) in users"
+        :key="i"
+        class="list__item"
+        :class="{ 'disabled': !user.status }"
+      >
+        <user-details :user="user" />
+        <div class="list__actions">
+          <button
+            class="button is-small is-text has-text-info"
+          >
+            editar
+          </button>
+          <button
+            class="button is-small is-text"
+            :class="{ 'has-text-success': !user.status }"
+            @click="changeStatus(user.id)"
+          >
+            {{ user.status ? 'desactivar' : 'activar' }}
+          </button>
+          <button
+            class="button is-small is-text has-text-danger"
+            @click="remove(user.id)"
+          >
+            eliminar
+          </button>
         </div>
       </div>
     </div>
@@ -50,23 +69,59 @@ export default {
   },
   methods: {
     ...mapActions({
-      getUsers: 'users/getUsers'
+      getUsers: 'users/getUsers',
+      changeUserStatus: 'users/changeStatus',
+      removeUser: 'users/remove'
     }),
     async loadTable () {
       this.users = await this.getUsers()
+    },
+    async changeStatus (id) {
+      try {
+        await this.changeUserStatus(id)
+        this.loadTable()
+      } catch ({ message }) {
+        console.log(message)
+      }
+    },
+    async remove (id) {
+      try {
+        await this.removeUser(id)
+        this.loadTable()
+      } catch ({ message }) {
+        console.log(message)
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.list-container {
+.list {
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   overflow: hidden;
-  .column {
+  background: #FFF;
+  &__item {
     border-bottom: 1px solid rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    &.disabled {
+      background: #f5f5f5;
+    }
+    div:first-child {
+      flex: 1;
+    }
+  }
+  &__actions {
+    // width: 100px;
+    // border-left: 1px solid rgba(0,0,0,0.15);
+    width: 210px;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 .button.is-small {

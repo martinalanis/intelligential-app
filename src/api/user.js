@@ -102,5 +102,44 @@ export default {
         resolve(true)
       }, 500)
     })
+  },
+  changeStatus: async (id) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          DB.users = DB.users.map(user => {
+            if (parseInt(user.id) === id) {
+              user.status = !user.status
+            }
+            return user
+          })
+        } else {
+          reject(new Error('No se encontraron registros'))
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
+  },
+  remove: async (id) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          DB.users = DB.users.filter(user => parseInt(user.id) !== id)
+        } else {
+          reject(new Error('No se encontraron registros'))
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
   }
 }

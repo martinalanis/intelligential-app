@@ -15,7 +15,10 @@
           <span class="role">{{ user.role }}</span>
         </p>
         <p>
-          <span class="tag is-small" :class="{ 'is-primary': user.status }">
+          <span
+            class="tag is-small"
+            :class="{ 'is-primary': user.status, 'has-background-grey-lighter': !user.status }"
+          >
             <span class="dot" :class="{ 'active': user.status }"></span>
             {{ user.status ? 'activo' : 'inactivo' }}
           </span>
@@ -39,7 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .user {
-  background: #FFF;
+  // background: #FFF;
   padding: 1rem;
   .column > * {
     line-height: 1.2;
