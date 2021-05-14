@@ -89,7 +89,6 @@ export default {
         const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
         if (DB?.users) {
           form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
-          form.role = 'administrador'
           form.status = 1
           DB.users.push(form)
         } else {

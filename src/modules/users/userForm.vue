@@ -8,8 +8,8 @@
         <fa-icon icon="times"></fa-icon>
       </span>
     </button>
-    <form class="card" @submit.prevent="submit">
-      <div class="card-content">
+    <form class="card" @submit.prevent="submit" ref="form">
+      <div class="card-content mb-2">
         <div
           v-for="({ sectionId, sectionName, fields }) in sections"
           :key="sectionId"
@@ -18,15 +18,28 @@
             <span>{{ sectionName }}</span>
             <span class="line"></span>
           </p>
-          <input-field
-            v-for="({ fieldId, key, type, label, required }) in fields"
+          <div
+            v-for="({ fieldId, key, type, label, options, required }) in fields"
             :key="fieldId"
-            :name="key"
-            :label="label"
-            :type="type"
-            :loading="loading"
-            :required="required"
-          />
+            class="mb-2"
+          >
+            <select-field
+              v-if="type === 'dropdown'"
+              :name="key"
+              :label="label"
+              :options="options"
+              :loading="loading"
+              :required="required"
+            />
+            <input-field
+              v-else
+              :name="key"
+              :label="label"
+              :type="type"
+              :loading="loading"
+              :required="required"
+            />
+          </div>
           <div
             v-if="error"
             class="alert error mb-2"
@@ -46,10 +59,12 @@
 <script>
 import { mapActions } from 'vuex'
 import InputField from '@/components/inputField'
+import SelectField from '@/components/selectField'
 export default {
   name: 'UserForm',
   components: {
-    InputField
+    InputField,
+    SelectField
   },
   data () {
     return {
@@ -87,6 +102,7 @@ export default {
       try {
         await this.saveUser(form)
         this.error = ''
+        this.$refs.form.reset()
         this.$emit('success')
         this.close()
       } catch ({ message }) {
@@ -135,12 +151,9 @@ dialog {
   }
   .section-header {
     position: relative;
-    // text-align: right;
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    // color: $blue-darken;
     color: #757476;
     .line {
       flex: 1;

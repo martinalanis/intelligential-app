@@ -39,6 +39,7 @@
           <button
             class="button is-small is-text has-text-danger"
             @click="remove(user.id)"
+            :disabled="currentUser.id === user.id"
           >
             eliminar
           </button>
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import UserDetails from './userDetails'
 import UserForm from './userForm'
 export default {
@@ -66,6 +67,11 @@ export default {
   },
   async created () {
     await this.loadTable()
+  },
+  computed: {
+    ...mapGetters({
+      currentUser: 'auth/user'
+    })
   },
   methods: {
     ...mapActions({
@@ -101,9 +107,9 @@ export default {
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  overflow: hidden;
-  background: #FFF;
+  // overflow: hidden;
   &__item {
+    background: #FFF;
     border-bottom: 1px solid rgba(0,0,0,0.15);
     display: flex;
     align-items: center;
@@ -112,6 +118,9 @@ export default {
     }
     div:first-child {
       flex: 1;
+    }
+    &:hover {
+      background: #efefef;
     }
   }
   &__actions {

@@ -59,6 +59,7 @@ export default {
     align-items: center;
   }
   &__role {
+    min-width: 8rem;
     margin-right: 3rem;
     small {
       font-size: 0.8rem;

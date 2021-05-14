@@ -25,26 +25,26 @@ export default {
             key: 'password',
             label: 'Password',
             required: true
+          },
+          {
+            fieldId: 4,
+            type: 'dropdown',
+            key: 'role',
+            label: 'Rol',
+            required: true,
+            options: [
+              {
+                fieldId: 1,
+                value: 'administrador',
+                label: 'Administrador'
+              },
+              {
+                fieldId: 2,
+                value: 'cliente',
+                label: 'Cliente'
+              }
+            ]
           }
-          // {
-          //   fieldId: 4,
-          //   type: 'dropdown',
-          //   key: 'role',
-          //   label: 'Rol',
-          //   required: true,
-          //   options: [
-          //     {
-          //       fieldId: 1,
-          //       value: 'administrador',
-          //       label: 'Administrador'
-          //     },
-          //     {
-          //       fieldId: 1,
-          //       value: 'cliente',
-          //       label: 'Cliente'
-          //     }
-          //   ]
-          // }
         ]
       }
     ]
