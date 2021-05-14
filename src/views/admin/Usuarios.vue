@@ -1,12 +1,8 @@
 <template>
   <div>
-    <div class="columns">
-      <div class="column">
-        <h1 class="title mb-5">
-          Usuarios
-        </h1>
-      </div>
-    </div>
+    <section-title>
+      USUARIOS
+    </section-title>
     <div class="columns">
       <div class="column is-12">
         <users-table />

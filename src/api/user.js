@@ -115,6 +115,13 @@ export default {
       }, 500)
     })
   },
+  getCreditForm: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(require('@/forms/credit.js').default)
+      }, 500)
+    })
+  },
   save: async (form) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

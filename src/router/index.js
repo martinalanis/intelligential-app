@@ -48,6 +48,14 @@ const routes = [
         meta: {
           role: ['cliente']
         }
+      },
+      {
+        name: 'nuevoCredito',
+        path: '/creditos/solicitar',
+        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/client/SolicitarCredito'),
+        meta: {
+          role: ['cliente']
+        }
       }
     ],
     meta: {

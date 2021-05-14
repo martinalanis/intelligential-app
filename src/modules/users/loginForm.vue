@@ -46,8 +46,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import InputField from '@/components/inputField'
-import CheckboxField from '@/components/checkboxField'
+import InputField from '@/components/form/inputField'
+import CheckboxField from '@/components/form/checkboxField'
 
 export default {
   name: 'LoginForm',
