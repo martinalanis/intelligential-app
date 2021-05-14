@@ -18,7 +18,7 @@
     <div class="menu__content px-2">
       <ul class="menu-list">
         <li
-          v-for="({ to, icon, name }, i) in links"
+          v-for="({ to, icon, name }, i) in routes"
           :key="i"
         >
           <router-link
@@ -58,17 +58,26 @@ export default {
         {
           to: '/',
           icon: 'columns',
-          name: 'Dashboard'
+          name: 'Dashboard',
+          role: ['administrador', 'cliente']
         },
         {
           to: '/usuarios',
           icon: 'user',
-          name: 'Usuarios'
+          name: 'Usuarios',
+          role: ['administrador']
         },
         {
           to: '/solicitudes',
           icon: 'columns',
-          name: 'Solicitudes'
+          name: 'Solicitudes',
+          role: ['administrador']
+        },
+        {
+          to: '/creditos',
+          icon: 'columns',
+          name: 'Créditos',
+          role: ['cliente']
         }
       ]
     }
@@ -76,7 +85,10 @@ export default {
   computed: {
     ...mapGetters({
       user: 'auth/user'
-    })
+    }),
+    routes () {
+      return this.links.filter(route => route.role.includes(this.user.role))
+    }
   },
   methods: {
     ...mapActions({

@@ -28,7 +28,7 @@ const routes = [
       {
         name: 'usuarios',
         path: '/usuarios',
-        component: () => import(/* webpackChunkName: "usuarios" */ '@/views/Usuarios'),
+        component: () => import(/* webpackChunkName: "usuarios" */ '@/views/admin/Usuarios'),
         meta: {
           role: ['administrador']
         }
@@ -36,7 +36,15 @@ const routes = [
       {
         name: 'solicitudes',
         path: '/solicitudes',
-        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/Solicitudes'),
+        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/admin/Solicitudes'),
+        meta: {
+          role: ['administrador']
+        }
+      },
+      {
+        name: 'creditos',
+        path: '/creditos',
+        component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/client/Creditos'),
         meta: {
           role: ['cliente']
         }

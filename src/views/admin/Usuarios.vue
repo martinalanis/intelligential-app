@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import UsersTable from '../modules/users/usersTable'
+import UsersTable from '@/modules/users/usersTable'
 export default {
   name: 'Usuarios',
   components: {
