@@ -2,7 +2,7 @@ const DB_NOT_FOUND = 'Base de datos de usuarios no encontrada'
 
 const userFindByCredentials = ({ email, password }) => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-  const user = DB.users.filter(el => el.email === email && el.password === password)[0]
+  const user = DB.users.filter(el => el.email === email && el.password === password && parseInt(el.status))[0]
   return user
     ? {
       user: DOUser(user),
@@ -31,6 +31,20 @@ const DOUser = (user) => {
   }
 }
 
+/**
+ * return formated user for save in database
+ */
+const DIUser = (user) => {
+  return {
+    id: user.id,
+    name: user?.name,
+    email: user?.email,
+    role: user.role,
+    password: user.password,
+    status: 1
+  }
+}
+
 export default {
   login: async (form) => {
     return new Promise((resolve, reject) => {
@@ -46,6 +60,24 @@ export default {
       } else {
         reject(new Error(DB_NOT_FOUND))
       }
+    })
+  },
+  register: async (form) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
+          DB.users.push(DIUser(form))
+        } else {
+          DB.users = DIUser(form)
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(userFindByCredentials(form))
+      }, 500)
     })
   },
   getUser: async (id) => {
@@ -89,10 +121,9 @@ export default {
         const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
         if (DB?.users) {
           form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
-          form.status = 1
-          DB.users.push(form)
+          DB.users.push(DIUser(form))
         } else {
-          DB.users = form
+          DB.users = DIUser(form)
         }
         localStorage.setItem(
           'intelligentialDB',
@@ -109,7 +140,7 @@ export default {
         if (DB?.users) {
           DB.users = DB.users.map(user => {
             if (parseInt(user.id) === id) {
-              user.status = !user.status
+              user.status = user.status ? 0 : 1
             }
             return user
           })

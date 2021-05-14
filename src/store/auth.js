@@ -45,6 +45,18 @@ export default {
       dispatch('setSessionToken', sessionToken)
       return user
     },
+    /**
+     * For readablity purpose
+     * In this case applys same logic that login but can implements
+     * additional features in case its needed
+     */
+    async register ({ commit, dispatch }, form) {
+      const { user, sessionToken } = await User.register(form)
+      commit('setUser', user)
+      commit('setRole', user.role)
+      dispatch('setSessionToken', sessionToken)
+      return user
+    },
     setSessionToken ({ commit }, token) {
       const params = {
         expires: 1 / 12 // expires in 2 hours

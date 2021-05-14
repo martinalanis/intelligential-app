@@ -22,7 +22,7 @@ const routes = [
         path: '/dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard'),
         meta: {
-          role: 'administrador'
+          role: ['administrador', 'cliente']
         }
       },
       {
@@ -30,7 +30,7 @@ const routes = [
         path: '/usuarios',
         component: () => import(/* webpackChunkName: "usuarios" */ '@/views/Usuarios'),
         meta: {
-          role: 'administrador'
+          role: ['administrador']
         }
       },
       {
@@ -38,7 +38,7 @@ const routes = [
         path: '/solicitudes',
         component: () => import(/* webpackChunkName: "solicitudes" */ '@/views/Solicitudes'),
         meta: {
-          role: 'cliente'
+          role: ['cliente']
         }
       }
     ],
@@ -63,8 +63,10 @@ router.beforeEach((to, from, next) => {
   const isLogged = store.getters['auth/isLogged']
   const userRole = store.getters['auth/userRole']
   const authorization = to.matched.some(record => record.meta.requiresAuth)
-  const hasPermission = to.matched.some(record => record.meta.role === userRole)
+  const hasPermission = to.matched.some(record => record.meta.role?.includes(userRole))
   const goToLogin = to.name === 'login'
+
+  // console.log(hasPermission)
 
   if (authorization && !isLogged) {
     next({ name: 'login' })

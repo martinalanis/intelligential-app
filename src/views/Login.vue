@@ -4,49 +4,30 @@
       <div class="column is-4">
         <h4 class="has-text-grey">Finantial App</h4>
         <h1 class="title has-text-primary-dark mb-5">INTELLIGENTIAL</h1>
-        <form
-          class="box content"
-          @submit.prevent="submit"
-        >
-          <p>
-            Ingresa tus datos
-          </p>
-          <input-field
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="admin@example.com"
-            icon="envelope"
-            :loading="loading"
-            required
-          />
-          <input-field
-            name="password"
-            label="Password"
-            :type="!showPassword ? 'password' : 'text'"
-            placeholder="******"
-            icon="lock"
-            :loading="loading"
-            required
-          />
-          <checkbox-field
-            v-model="showPassword"
-            label="Mostrar contraseña"
-          />
-          <div
-            v-if="error"
-            class="alert error mb-2"
-          >
-            {{ error }}
+        <div class="card mb-5">
+          <div class="tabs">
+            <button
+              class="button"
+              :class="{ 'is-primary': active === 'login' }"
+              @click="active = 'login'"
+            >
+              LOGIN
+            </button>
+            <button
+              class="button"
+              :class="{ 'is-primary': active === 'register' }"
+              @click="active = 'register'"
+            >
+              REGISTRO
+            </button>
           </div>
-          <button
-            type="submit"
-            class="button is-primary mt-2"
-            :class="{ 'is-loading': loading }"
-          >
-            INGRESAR
-          </button>
-        </form>
+          <div class="card-content">
+            <transition name="fade" mode="out-in">
+              <login-form v-if="active === 'login'"/>
+              <register-form v-if="active === 'register'"/>
+            </transition>
+          </div>
+        </div>
         <p class="is-italic is-size-7 mb-3">
           * Todos los campos son requeridos
         </p>
@@ -70,20 +51,18 @@
 <script>
 import db from '@/db.json'
 import { mapActions, mapState } from 'vuex'
-import InputField from '@/components/inputField'
-import CheckboxField from '@/components/checkboxField'
+import LoginForm from '../modules/users/loginForm'
+import RegisterForm from '../modules/users/registerForm'
 
 export default {
   name: 'Login',
   components: {
-    InputField,
-    CheckboxField
+    LoginForm,
+    RegisterForm
   },
   data () {
     return {
-      loading: false,
-      showPassword: false,
-      error: ''
+      active: 'login'
     }
   },
   created () {
@@ -95,25 +74,38 @@ export default {
   methods: {
     ...mapActions({
       initDB: 'initDB',
-      checkDatabase: 'checkDatabase',
-      login: 'auth/login'
+      checkDatabase: 'checkDatabase'
     }),
-    async submit (event) {
-      const form = Object.fromEntries(new FormData(event.target))
-      this.loading = true
-      try {
-        await this.login(form)
-        this.error = ''
-        this.$router.push({ name: 'dashboard' })
-      } catch ({ message }) {
-        this.error = message
-      } finally {
-        this.loading = false
-      }
-    },
     loadInitialDb () {
       this.initDB(db)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tabs {
+  display: flex;
+  margin-bottom: 0;
+  button {
+    flex: 1;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    &:first-child {
+      margin-right: -1px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .15s ease;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+}
+</style>

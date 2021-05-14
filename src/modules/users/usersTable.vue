@@ -15,7 +15,7 @@
         </button>
       </div>
     </div>
-    <div class="list">
+    <div class="list" :class="{ 'has-overlay': loading }">
       <div
         v-for="(user, i) in users"
         :key="i"
@@ -33,6 +33,7 @@
             class="button is-small is-text"
             :class="{ 'has-text-success': !user.status }"
             @click="changeStatus(user.id)"
+            :disabled="currentUser.id === user.id"
           >
             {{ user.status ? 'desactivar' : 'activar' }}
           </button>
@@ -62,7 +63,8 @@ export default {
   },
   data () {
     return {
-      users: []
+      users: [],
+      loading: false
     }
   },
   async created () {
@@ -80,7 +82,9 @@ export default {
       removeUser: 'users/remove'
     }),
     async loadTable () {
+      this.loading = true
       this.users = await this.getUsers()
+      this.loading = false
     },
     async changeStatus (id) {
       try {
@@ -104,10 +108,10 @@ export default {
 
 <style lang="scss" scoped>
 .list {
+  position: relative;
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  // overflow: hidden;
   &__item {
     background: #FFF;
     border-bottom: 1px solid rgba(0,0,0,0.15);
@@ -131,6 +135,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  &.has-overlay::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.45);
   }
 }
 .button.is-small {
