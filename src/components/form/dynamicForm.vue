@@ -18,6 +18,7 @@
       </p>
       <fields-component
         :fields="fields"
+        :loading="loading"
       />
       <div
         v-for="({ subgroupId, name, description, fields }) in subgroups"
@@ -32,6 +33,7 @@
         </p>
         <fields-component
           :fields="fields"
+          :loading="loading"
         />
       </div>
     </div>

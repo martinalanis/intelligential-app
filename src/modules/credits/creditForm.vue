@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import DynamicForm from '@/components/form/dynamicForm'
 export default {
   name: 'CreditForm',
@@ -27,18 +27,24 @@ export default {
   async created () {
     this.form = await this.getForm().then(r => r.form)
   },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user'
+    })
+  },
   methods: {
     ...mapActions({
       getForm: 'users/getCreditForm',
-      save: 'users/saveCreditForm'
+      save: 'users/saveCredit'
     }),
     async submit (form) {
       this.loading = true
+      form.userId = this.user.id
       try {
         await this.save(form)
         this.$refs.form.error = ''
         this.$refs.form.reset()
-        this.$emit('success')
+        console.log('creado')
       } catch ({ message }) {
         this.$refs.form.error = message
       } finally {

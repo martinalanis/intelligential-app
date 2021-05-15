@@ -36,8 +36,12 @@ export default {
   },
   props: {
     fields: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 }

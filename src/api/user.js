@@ -130,7 +130,29 @@ export default {
           form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
           DB.users.push(DIUser(form))
         } else {
+          form.id = 1
           DB.users = DIUser(form)
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
+  },
+  saveCredit: async (form) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        form.createdAt = new Date()
+        form.updateddAt = new Date()
+        if (DB?.credits) {
+          form.id = parseInt(DB.credits[DB.credits.length - 1].id) + 1
+          DB.credits.push(form)
+        } else {
+          form.id = 1
+          DB.credits = form
         }
         localStorage.setItem(
           'intelligentialDB',
