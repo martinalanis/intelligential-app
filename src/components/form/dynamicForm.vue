@@ -16,28 +16,9 @@
         </span>
         <span class="line"></span>
       </p>
-      <div
-        v-for="({ fieldId, key, type, label, options, required }) in fields"
-        :key="fieldId"
-        class="mb-2"
-      >
-        <select-field
-          v-if="type === 'dropdown'"
-          :name="key"
-          :label="label"
-          :options="options"
-          :loading="loading"
-          :required="required"
-        />
-        <input-field
-          v-else
-          :name="key"
-          :label="label"
-          :type="type"
-          :loading="loading"
-          :required="required"
-        />
-      </div>
+      <fields-component
+        :fields="fields"
+      />
       <div
         v-for="({ subgroupId, name, description, fields }) in subgroups"
         :key="`sub-${subgroupId}`"
@@ -49,28 +30,9 @@
         <p class="mb-4">
           {{ description }}
         </p>
-        <div
-          v-for="({ fieldId, key, type, label, options, required }) in fields"
-          :key="fieldId"
-          class="mb-2"
-        >
-          <select-field
-            v-if="type === 'dropdown'"
-            :name="key"
-            :label="label"
-            :options="options"
-            :loading="loading"
-            :required="required"
-          />
-          <input-field
-            v-else
-            :name="key"
-            :label="label"
-            :type="type"
-            :loading="loading"
-            :required="required"
-          />
-        </div>
+        <fields-component
+          :fields="fields"
+        />
       </div>
     </div>
     <div
@@ -93,13 +55,11 @@
 </template>
 
 <script>
-import InputField from '@/components/form/inputField'
-import SelectField from '@/components/form/selectField'
+import FieldsComponent from '@/components/form/fieldsComponent'
 export default {
   name: 'DynamicForm',
   components: {
-    InputField,
-    SelectField
+    FieldsComponent
   },
   props: {
     form: {
