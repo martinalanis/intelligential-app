@@ -8,7 +8,10 @@ import {
   faColumns,
   faSignOutAlt,
   faPlus,
-  faTimes
+  faTimes,
+  faCheck,
+  faFileAlt,
+  faLongArrowAltRight
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -19,6 +22,9 @@ library.add(
   faColumns,
   faSignOutAlt,
   faPlus,
-  faTimes
+  faTimes,
+  faCheck,
+  faFileAlt,
+  faLongArrowAltRight
 )
 Vue.component('fa-icon', FontAwesomeIcon)

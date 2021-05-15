@@ -5,9 +5,9 @@
     </section-title>
     <div class="columns">
       <div class="column">
-        <router-link
-          class="button is-small is-info"
-          :to="{ name: 'nuevoCredito' }"
+        <button
+          class="button is-small is-info br-c"
+          @click="$router.push({ name: 'nuevoCredito' })"
         >
           <span class="icon mr-1">
             <fa-icon icon="plus"></fa-icon>
@@ -15,15 +15,20 @@
           <span>
             SOLICITAR CRÉDITO
           </span>
-        </router-link>
+        </button>
       </div>
     </div>
+    <credits-grid />
   </div>
 </template>
 
 <script>
+import CreditsGrid from '@/modules/credits/creditsGrid'
 export default {
-  name: 'Creditos'
+  name: 'Creditos',
+  components: {
+    CreditsGrid
+  }
 }
 </script>
 

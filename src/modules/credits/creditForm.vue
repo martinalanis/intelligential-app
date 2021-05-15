@@ -7,15 +7,31 @@
       @cancel="$router.back()"
       @submit="submit"
     />
+    <message-dialog
+      ref="dialog"
+      size="300px"
+      :timeout="2500"
+    >
+      <div class="confirmation">
+        <div class="confirmation__icon">
+          <fa-icon icon="check" class="has-text-success" size="3x" /><br>
+        </div>
+        <h2 class="confirmation__text">
+          SOLICITUD REGISTRADA
+        </h2>
+      </div>
+    </message-dialog>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import DynamicForm from '@/components/form/dynamicForm'
+import MessageDialog from '../../components/ui/dialog'
 export default {
   name: 'CreditForm',
   components: {
+    MessageDialog,
     DynamicForm
   },
   data () {
@@ -44,7 +60,8 @@ export default {
         await this.save(form)
         this.$refs.form.error = ''
         this.$refs.form.reset()
-        console.log('creado')
+        await this.$refs.dialog.show()
+        this.$router.push({ name: 'creditos' })
       } catch ({ message }) {
         this.$refs.form.error = message
       } finally {
@@ -54,3 +71,24 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &__icon {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    box-shadow: $box-shadow;
+    padding: 1.2rem;
+    border-radius: 50%;
+    background: #48c77415 ;
+  }
+  &__text {
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+}
+</style>

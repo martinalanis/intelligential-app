@@ -23,6 +23,9 @@ export default {
     },
     async saveCredit ({ commit }, form) {
       return await User.saveCredit(form)
+    },
+    async getCredits ({ commit }) {
+      return await User.getCredits()
     }
   }
 }

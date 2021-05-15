@@ -75,7 +75,7 @@ export default {
         },
         {
           to: '/creditos',
-          icon: 'columns',
+          icon: 'file-alt',
           name: 'Créditos',
           role: ['cliente']
         }

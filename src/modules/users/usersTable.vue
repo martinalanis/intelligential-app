@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="column">
         <button
-          class="button is-small is-info"
+          class="button is-small is-info br-c"
           @click="$refs.userForm.add()"
         >
           <span class="icon mr-1">
@@ -145,8 +145,5 @@ export default {
     bottom: 0;
     background: rgba(255,255,255,0.45);
   }
-}
-.button.is-small {
-  border-radius: $border-radius;
 }
 </style>

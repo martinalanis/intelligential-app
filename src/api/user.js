@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 const DB_NOT_FOUND = 'Base de datos de usuarios no encontrada'
 
 const userFindByCredentials = ({ email, password }) => {
@@ -15,6 +16,15 @@ const userFindOrFail = (id) => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
   const user = DB.users.filter(el => el.id === id)[0]
   return user ? DOUser(user) : false
+}
+
+const findCreditsByUser = () => {
+  const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+  const cookie = Cookies.get('it_session')
+  const id = cookie ? Cookies.get('it_session').split('-')[0] : ''
+  return DB.credits.length
+    ? DB.credits.filter(el => el.userId === parseInt(id))
+    : []
 }
 
 /**
@@ -46,6 +56,7 @@ const DIUser = (user) => {
 }
 
 export default {
+  // AUTH
   login: async (form) => {
     return new Promise((resolve, reject) => {
       const { users } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
@@ -80,6 +91,8 @@ export default {
       }, 500)
     })
   },
+
+  // GENERAL
   getUser: async (id) => {
     return new Promise((resolve, reject) => {
       const { users } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
@@ -108,31 +121,17 @@ export default {
       }
     })
   },
-  getForm: async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(require('@/forms/user.js').default)
-      }, 500)
-    })
-  },
-  getCreditForm: async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(require('@/forms/credit.js').default)
-      }, 500)
-    })
-  },
   save: async (form) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
         if (DB?.users) {
           form.id = parseInt(DB.users[DB.users.length - 1].id) + 1
-          DB.users.push(DIUser(form))
         } else {
+          DB.users = []
           form.id = 1
-          DB.users = DIUser(form)
         }
+        DB.users.push(DIUser(form))
         localStorage.setItem(
           'intelligentialDB',
           JSON.stringify(DB)
@@ -141,24 +140,10 @@ export default {
       }, 500)
     })
   },
-  saveCredit: async (form) => {
+  getForm: async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-        form.createdAt = new Date()
-        form.updateddAt = new Date()
-        if (DB?.credits) {
-          form.id = parseInt(DB.credits[DB.credits.length - 1].id) + 1
-          DB.credits.push(form)
-        } else {
-          form.id = 1
-          DB.credits = form
-        }
-        localStorage.setItem(
-          'intelligentialDB',
-          JSON.stringify(DB)
-        )
-        resolve(true)
+        resolve(require('@/forms/user.js').default)
       }, 500)
     })
   },
@@ -193,6 +178,44 @@ export default {
         } else {
           reject(new Error('No se encontraron registros'))
         }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
+  },
+
+  // CREDITS
+  getCreditForm: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(require('@/forms/credit.js').default)
+      }, 500)
+    })
+  },
+  getCredits: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(findCreditsByUser())
+      }, 500)
+    })
+  },
+  saveCredit: async (form) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        form.createdAt = new Date()
+        form.updatedAt = new Date()
+        form.status = 'pending'
+        if (DB?.credits) {
+          form.id = parseInt(DB.credits[DB.credits.length - 1].id) + 1
+        } else {
+          DB.credits = []
+          form.id = 1
+        }
+        DB.credits.push(form)
         localStorage.setItem(
           'intelligentialDB',
           JSON.stringify(DB)
