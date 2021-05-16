@@ -80,5 +80,35 @@ export default {
         resolve(true)
       }, 500)
     })
+  },
+  getStatistics: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.credits) {
+          resolve([
+            {
+              item: 'Pendientes',
+              value: DB.users.filter(user => user.role === 'pending').length
+            },
+            {
+              item: 'Aprobados',
+              value: DB.users.filter(user => user.role === 'approved').length
+            },
+            {
+              item: 'Rechazados',
+              value: DB.users.filter(user => user.role === 'rejected').length
+            }
+          ])
+        } else {
+          reject(new Error('No se encontraron registros'))
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
   }
 }

@@ -17,6 +17,9 @@ export default {
     },
     async changeStatus ({ commit }, { status, id }) {
       return await Credit.changeStatus(status, id)
+    },
+    async getStatistics ({ commit }) {
+      return await Credit.getStatistics()
     }
   }
 }

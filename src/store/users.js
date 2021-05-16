@@ -20,6 +20,9 @@ export default {
     },
     async remove ({ commit }, id) {
       return await User.remove(id)
+    },
+    async getStatistics ({ commit }) {
+      return await User.getStatistics()
     }
   }
 }

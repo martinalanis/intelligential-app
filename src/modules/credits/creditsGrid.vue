@@ -1,44 +1,46 @@
 <template>
   <div>
-    <template v-if="items.length">
-      <div class="columns">
-        <div class="column is-flex is-justify-content-space-between is-align-items-center">
-          <p>Creditos solicitados:</p>
-          <div class="field has-addons">
-            <div
-              v-for="filter in filters"
-              :key="filter"
-              class="control"
-            >
-              <button
-                class="button is-capitalized"
-                :class="{ 'is-primary': activeFilter === filter }"
-                @click="activeFilter = filter"
+    <template v-if="!loadingInfo">
+      <template v-if="items.length">
+        <div class="columns">
+          <div class="column is-flex is-justify-content-space-between is-align-items-center">
+            <p>Creditos solicitados:</p>
+            <div class="field has-addons">
+              <div
+                v-for="filter in filters"
+                :key="filter"
+                class="control"
               >
-                {{ filter }}
-              </button>
+                <button
+                  class="button is-capitalized"
+                  :class="{ 'is-primary': activeFilter === filter }"
+                  @click="activeFilter = filter"
+                >
+                  {{ filter }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="columns is-multiline">
-        <div
-          v-for="(credit, i) in credits"
-          :key="i"
-          class="column is-4"
-        >
-          <credit-card-details :credit="credit" @show="show" />
-        </div>
-      </div>
-    </template>
-    <template v-else>
-      <div class="columns">
-        <div class="column">
-          <div class="not-found-label">
-            <p>Aún no haz solicitado créditos</p>
+        <div class="columns is-multiline">
+          <div
+            v-for="(credit, i) in credits"
+            :key="i"
+            class="column is-4"
+          >
+            <credit-card-details :credit="credit" @show="show" />
           </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="columns">
+          <div class="column">
+            <div class="not-found-label">
+              <p>Aún no haz solicitado créditos</p>
+            </div>
+          </div>
+        </div>
+      </template>
     </template>
     <message-dialog
       ref="dialog"
@@ -66,6 +68,7 @@ export default {
     return {
       items: [],
       loading: false,
+      loadingInfo: true,
       activeCreditToShow: {},
       filters: [
         'todos',
@@ -93,6 +96,7 @@ export default {
   },
   async mounted () {
     await this.loadData()
+    this.loadingInfo = false
   },
   methods: {
     ...mapActions({

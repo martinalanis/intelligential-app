@@ -198,5 +198,31 @@ export default {
         resolve(true)
       }, 500)
     })
+  },
+  getStatistics: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          resolve([
+            {
+              item: 'Administradores',
+              value: DB.users.filter(user => user.role === 'administrador').length
+            },
+            {
+              item: 'Clientes',
+              value: DB.users.filter(user => user.role === 'cliente').length
+            }
+          ])
+        } else {
+          reject(new Error('No se encontraron registros'))
+        }
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
   }
 }
