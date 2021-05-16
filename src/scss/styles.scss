@@ -28,6 +28,17 @@ html {
   }
 }
 
+.status-declined {
+  background-color: #dbdbdb!important;
+}
+.status-accepted {
+  background-color: #00d1b2!important;
+}
+.status-pending {
+  background-color: #fff5ce!important;
+  color: #8a8a8a;
+}
+
 .bordered {
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: $border-radius;

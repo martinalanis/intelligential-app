@@ -27,7 +27,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import DynamicForm from '@/components/form/dynamicForm'
-import MessageDialog from '../../components/ui/dialog'
+import MessageDialog from '@/components/ui/dialog'
 export default {
   name: 'CreditForm',
   components: {

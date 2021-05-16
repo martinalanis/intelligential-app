@@ -27,7 +27,7 @@
           :key="i"
           class="column is-4"
         >
-          <credit-card-details :credit="credit" />
+          <credit-card-details :credit="credit" @show="show" />
         </div>
       </div>
     </template>
@@ -40,6 +40,12 @@
         </div>
       </div>
     </template>
+    <message-dialog
+      ref="dialog"
+      size="400px"
+    >
+      <credit-details :credit="activeCreditToShow"/>
+    </message-dialog>
   </div>
 </template>
 
@@ -47,15 +53,20 @@
 import { mapActions } from 'vuex'
 import { formatDate } from '@/helpers'
 import CreditCardDetails from '@/modules/credits/creditCardDetails'
+import CreditDetails from '@/modules/credits/creditDetails'
+import MessageDialog from '@/components/ui/dialog'
 export default {
   name: 'CreditsGrid',
   components: {
-    CreditCardDetails
+    CreditCardDetails,
+    CreditDetails,
+    MessageDialog
   },
   data () {
     return {
       items: [],
       loading: false,
+      activeCreditToShow: {},
       filters: [
         'todos',
         'accepted',
@@ -91,6 +102,10 @@ export default {
       this.loading = true
       this.items = await this.getCredits()
       this.loading = false
+    },
+    show (credit) {
+      this.activeCreditToShow = credit
+      this.$refs.dialog.show()
     }
   }
 }

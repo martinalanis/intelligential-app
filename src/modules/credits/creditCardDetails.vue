@@ -1,10 +1,10 @@
 <template>
   <div class="credit">
-    <div class="credit__icon" :class="{ [`${credit.status}`]: true }">
+    <div class="credit__icon" :class="{ [`status-${credit.status}`]: true }">
       <fa-icon icon="file-alt" size="2x" />
     </div>
     <div class="credit__content">
-      <a href="" class="credit__see-details">
+      <a class="credit__see-details" @click.prevent="$emit('show', credit)">
         detalles <fa-icon icon="long-arrow-alt-right" />
       </a>
       <ul class="credit__list">
@@ -21,7 +21,7 @@
           {{ credit.createdAt }}
         </li>
       </ul>
-      <span class="tag" :class="{ [`${credit.status}`]: true }">
+      <span class="tag" :class="{ [`status-${credit.status}`]: true }">
         {{ credit.status }}
       </span>
     </div>
@@ -92,16 +92,6 @@ export default {
         border-bottom: 1px solid rgba(0,0,0,0.15);
       }
     }
-  }
-  .declined {
-    background: #dbdbdb;
-  }
-  .accepted {
-    background: #00d1b2;
-  }
-  .pending {
-    background: #fff5ce;
-    color: #8a8a8a;
   }
 }
 </style>
