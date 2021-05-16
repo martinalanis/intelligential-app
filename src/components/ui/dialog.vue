@@ -9,8 +9,11 @@
       </span>
     </button>
     <div class="modal-content">
-      <div class="box">
-        <slot></slot>
+      <div class="card">
+        <div class="card-content">
+          <slot></slot>
+        </div>
+        <slot name="footer"></slot>
       </div>
     </div>
   </dialog>
