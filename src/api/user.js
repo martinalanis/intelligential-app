@@ -130,6 +130,29 @@ export default {
       }, 500)
     })
   },
+  update: async (form, id) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.users) {
+          DB.users = DB.users.map(user => {
+            if (parseInt(user.id) === id) {
+              return {
+                ...user,
+                ...form
+              }
+            }
+            return user
+          })
+          localStorage.setItem(
+            'intelligentialDB',
+            JSON.stringify(DB)
+          )
+        }
+        resolve(true)
+      }, 500)
+    })
+  },
   getForm: async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

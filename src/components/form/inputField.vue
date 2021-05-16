@@ -2,14 +2,14 @@
   <div class="field">
     <label
       v-if="label"
-      :for="label"
+      :for="name"
       class="is-inline-block"
     >
       {{ label }}:
     </label>
     <div class="control" :class="{ 'has-icons-left': icon, 'is-loading': loading }">
       <input
-        :id="label"
+        :id="name"
         :type="type"
         :placeholder="placeholder"
         :name="name"

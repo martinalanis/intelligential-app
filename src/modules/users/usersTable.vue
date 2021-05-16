@@ -26,6 +26,7 @@
         <div class="table-list__actions">
           <button
             class="button is-small is-text has-text-info"
+            @click="$refs.userForm.edit(user)"
           >
             editar
           </button>

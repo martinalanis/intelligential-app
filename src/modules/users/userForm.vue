@@ -31,7 +31,9 @@ export default {
   data () {
     return {
       loading: false,
-      form: {}
+      form: {},
+      isEdit: false,
+      userId: null
     }
   },
   async created () {
@@ -40,19 +42,35 @@ export default {
   methods: {
     ...mapActions({
       getForm: 'users/getForm',
-      saveUser: 'users/saveUser'
+      saveUser: 'users/saveUser',
+      updateUser: 'users/updateUser'
     }),
     add () {
       // this.dialog = true
       this.$refs.modal.showModal()
     },
+    edit (user) {
+      this.isEdit = true
+      this.userId = user.id
+      this.$refs.modal.showModal()
+      Object.keys(user).forEach(key => {
+        const el = document.getElementById(key)
+        if (el) el.value = user[key]
+      })
+    },
     close () {
       this.$refs.modal.close()
+      this.isEdit = false
+      this.userId = null
     },
     async submit (form) {
       this.loading = true
       try {
-        await this.saveUser(form)
+        if (this.isEdit) {
+          await this.updateUser({ form, id: this.userId })
+        } else {
+          await this.saveUser(form)
+        }
         this.$refs.form.error = ''
         this.$refs.form.reset()
         this.$emit('success')

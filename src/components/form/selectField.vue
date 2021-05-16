@@ -2,7 +2,7 @@
   <div class="field">
     <label
       v-if="label"
-      :for="label"
+      :for="name"
       class="is-inline-block"
     >
       {{ label }}:
@@ -11,7 +11,7 @@
       <div class="select is-fullwidth" :class="{ 'is-loading': loading }">
         <select
           :name="name"
-          :id="label"
+          :id="name"
           :required="required"
           :disabled="loading"
         >

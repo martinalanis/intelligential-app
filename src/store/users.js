@@ -12,6 +12,9 @@ export default {
     async saveUser ({ commit }, form) {
       return await User.save(form)
     },
+    async updateUser ({ commit }, { form, id }) {
+      return await User.update(form, id)
+    },
     async changeStatus ({ commit }, id) {
       return await User.changeStatus(id)
     },
