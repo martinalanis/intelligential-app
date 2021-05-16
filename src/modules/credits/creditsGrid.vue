@@ -69,9 +69,9 @@ export default {
       activeCreditToShow: {},
       filters: [
         'todos',
-        'accepted',
+        'approved',
         'pending',
-        'declined'
+        'rejected'
       ],
       activeFilter: 'todos'
     }

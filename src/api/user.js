@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 const DB_NOT_FOUND = 'Base de datos de usuarios no encontrada'
 
 const userFindByCredentials = ({ email, password }) => {
@@ -16,15 +15,6 @@ const userFindOrFail = (id) => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
   const user = DB.users.filter(el => el.id === id)[0]
   return user ? DOUser(user) : false
-}
-
-const findCreditsByUser = () => {
-  const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-  const cookie = Cookies.get('it_session')
-  const id = cookie ? Cookies.get('it_session').split('-')[0] : ''
-  return DB.credits.length
-    ? DB.credits.filter(el => el.userId === parseInt(id))
-    : []
 }
 
 /**
@@ -178,51 +168,6 @@ export default {
         } else {
           reject(new Error('No se encontraron registros'))
         }
-        localStorage.setItem(
-          'intelligentialDB',
-          JSON.stringify(DB)
-        )
-        resolve(true)
-      }, 500)
-    })
-  },
-
-  // CREDITS
-  getCreditForm: async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(require('@/forms/credit.js').default)
-      }, 500)
-    })
-  },
-  getCredits: async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(findCreditsByUser())
-      }, 500)
-    })
-  },
-  getAllCredits: async () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(findCreditsByUser())
-      }, 500)
-    })
-  },
-  saveCredit: async (form) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
-        form.createdAt = new Date()
-        form.updatedAt = new Date()
-        form.status = 'pending'
-        if (DB?.credits) {
-          form.id = parseInt(DB.credits[DB.credits.length - 1].id) + 1
-        } else {
-          DB.credits = []
-          form.id = 1
-        }
-        DB.credits.push(form)
         localStorage.setItem(
           'intelligentialDB',
           JSON.stringify(DB)

@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getForm: 'users/getCreditForm'
+      getForm: 'credits/getForm'
     }),
     getLabelFromFormKey (key) {
       // Helper funtions

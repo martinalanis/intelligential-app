@@ -28,10 +28,11 @@ html {
   }
 }
 
-.status-declined {
-  background-color: #dbdbdb!important;
+.status-rejected {
+  background-color: #fd6b6b!important;
+  color: #FFF!important;
 }
-.status-accepted {
+.status-approved {
   background-color: #00d1b2!important;
 }
 .status-pending {

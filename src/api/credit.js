@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+const DB_NOT_FOUND = 'Base de datos de usuarios no encontrada'
 
 const findCreditsByUser = () => {
   const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
@@ -24,10 +25,15 @@ export default {
       }, 500)
     })
   },
-  getAllCredits: async () => {
+  all: async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(findCreditsByUser())
+        const { credits } = JSON.parse(localStorage.getItem('intelligentialDB')) || ''
+        if (credits) {
+          resolve(credits)
+        } else {
+          reject(new Error(DB_NOT_FOUND))
+        }
       }, 500)
     })
   },
@@ -45,6 +51,28 @@ export default {
           form.id = 1
         }
         DB.credits.push(form)
+        localStorage.setItem(
+          'intelligentialDB',
+          JSON.stringify(DB)
+        )
+        resolve(true)
+      }, 500)
+    })
+  },
+  changeStatus: async (status, id) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const DB = JSON.parse(localStorage.getItem('intelligentialDB'))
+        if (DB?.credits) {
+          DB.credits = DB.credits.map(credit => {
+            if (parseInt(credit.id) === id) {
+              credit.status = status
+            }
+            return credit
+          })
+        } else {
+          reject(new Error('No se encontraron registros'))
+        }
         localStorage.setItem(
           'intelligentialDB',
           JSON.stringify(DB)

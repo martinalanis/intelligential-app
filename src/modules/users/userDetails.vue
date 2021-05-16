@@ -68,21 +68,5 @@ export default {
     color: #646564;
     text-transform: capitalize;
   }
-  .dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    background: #acacac;
-    &.active {
-      background: #f8f407;
-    }
-  }
-  .divider-vertical {
-    background: rgba(0,0,0,0.2);
-    width: 2px;
-    height: 1.2rem;
-    margin: 0 0.8rem;
-  }
 }
 </style>

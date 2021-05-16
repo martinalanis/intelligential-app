@@ -12,8 +12,11 @@ export default {
     async currentUserCredits ({ commit }) {
       return await Credit.currentUserCredits()
     },
-    async getAllCredits ({ commit }) {
-      return await Credit.getAllCredits()
+    async all ({ commit }) {
+      return await Credit.all()
+    },
+    async changeStatus ({ commit }, { status, id }) {
+      return await Credit.changeStatus(status, id)
     }
   }
 }
