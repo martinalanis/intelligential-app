@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCredits: 'users/getCredits'
+      getCredits: 'credits/currentUserCredits'
     }),
     async loadData () {
       this.loading = true

@@ -17,15 +17,6 @@ export default {
     },
     async remove ({ commit }, id) {
       return await User.remove(id)
-    },
-    async getCreditForm ({ commit }, id) {
-      return await User.getCreditForm()
-    },
-    async saveCredit ({ commit }, form) {
-      return await User.saveCredit(form)
-    },
-    async getCredits ({ commit }) {
-      return await User.getCredits()
     }
   }
 }

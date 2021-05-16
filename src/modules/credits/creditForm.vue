@@ -50,8 +50,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getForm: 'users/getCreditForm',
-      save: 'users/saveCredit'
+      getForm: 'credits/getForm',
+      save: 'credits/saveCredit'
     }),
     async submit (form) {
       this.loading = true

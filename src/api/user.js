@@ -202,6 +202,13 @@ export default {
       }, 500)
     })
   },
+  getAllCredits: async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(findCreditsByUser())
+      }, 500)
+    })
+  },
   saveCredit: async (form) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -36,7 +36,7 @@ html {
 }
 .status-pending {
   background-color: #fff5ce!important;
-  color: #8a8a8a;
+  color: #8a8a8a!important;
 }
 
 .bordered {
@@ -129,6 +129,44 @@ html {
     padding: 0 2rem;
     align-items: center;
     justify-content: flex-end;
+  }
+}
+
+.table-list {
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  &__item {
+    background: #FFF;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    &.disabled {
+      background: #f5f5f5;
+    }
+    div:first-child {
+      flex: 1;
+    }
+    &:hover {
+      background: #efefef;
+    }
+  }
+  &__actions {
+    width: 210px;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &.has-overlay::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.45);
   }
 }
 

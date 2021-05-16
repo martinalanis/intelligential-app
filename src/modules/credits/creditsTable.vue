@@ -1,20 +1,5 @@
 <template>
   <div>
-    <div class="columns">
-      <div class="column">
-        <button
-          class="button is-small is-info br-c"
-          @click="$refs.userForm.add()"
-        >
-          <span class="icon mr-1">
-            <fa-icon icon="plus"></fa-icon>
-          </span>
-          <span>
-            AGREGAR USUARIO
-          </span>
-        </button>
-      </div>
-    </div>
     <div class="table-list" :class="{ 'has-overlay': loading }">
       <div
         v-for="(user, i) in users"
@@ -47,61 +32,50 @@
         </div>
       </div>
     </div>
-    <user-form ref="userForm" @success="loadTable"/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import UserDetails from './userDetails'
-import UserForm from './userForm'
 export default {
   name: 'UsersTable',
   components: {
-    UserDetails,
-    UserForm
+    UserDetails
   },
   data () {
     return {
-      users: [],
-      loading: false
+      items: []
     }
   },
   async created () {
     await this.loadTable()
   },
-  computed: {
-    ...mapGetters({
-      currentUser: 'auth/user'
-    })
-  },
   methods: {
     ...mapActions({
-      getUsers: 'users/getUsers',
-      changeUserStatus: 'users/changeStatus',
-      removeUser: 'users/remove'
+      getCredits: 'users/getAllCredits'
     }),
     async loadTable () {
       this.loading = true
-      this.users = await this.getUsers()
+      this.items = await this.getCredits()
       this.loading = false
-    },
-    async changeStatus (id) {
-      try {
-        await this.changeUserStatus(id)
-        this.loadTable()
-      } catch ({ message }) {
-        console.log(message)
-      }
-    },
-    async remove (id) {
-      try {
-        await this.removeUser(id)
-        this.loadTable()
-      } catch ({ message }) {
-        console.log(message)
-      }
     }
+    // async changeStatus (id) {
+    //   try {
+    //     await this.changeUserStatus(id)
+    //     this.loadTable()
+    //   } catch ({ message }) {
+    //     console.log(message)
+    //   }
+    // },
+    // async remove (id) {
+    //   try {
+    //     await this.removeUser(id)
+    //     this.loadTable()
+    //   } catch ({ message }) {
+    //     console.log(message)
+    //   }
+    // }
   }
 }
 </script>
