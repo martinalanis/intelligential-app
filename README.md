@@ -29,6 +29,8 @@ Diseñar uno o más diagramas para modelar la arquitectura del nuevo sistema, mo
 
 > PDF con la solucion adjunta en la raiz del proyecto (intelligential_exercise-2.pdf)
 
+![Imagen](https://github.com/martinalanis/intelligential-app/blob/main/intelligential_exercise-2.jpg?raw=true)
+
 ## Ejercicio 3
 Diseñar y maquetar un sistema web que permita a un usuario capturar la información para una solicitud de crédito.
 
