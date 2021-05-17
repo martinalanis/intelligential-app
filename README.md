@@ -51,6 +51,7 @@ Diseñar y maquetar un sistema web que permita a un usuario capturar la informac
 
 Para ver la solucion situarce en la raiz del proyecto mediante la linea comando y ejecutar
 ```
+npm install
 npm run serve
 ```
 >**IMPORTANTE**:
