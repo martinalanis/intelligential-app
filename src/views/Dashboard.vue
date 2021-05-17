@@ -4,7 +4,7 @@
       BIENVENIDO
     </section-title>
     <div v-if="userRole === 'administrador'" class="columns is-multiline">
-      <div class="column is-4">
+      <div class="column is-6-tablet is-4-desktop">
         <statistic-card
           title="USUARIOS"
           type="info"
@@ -17,7 +17,7 @@
           </template>
         </statistic-card>
       </div>
-      <div class="column is-4">
+      <div class="column is-6-tablet is-4-desktop">
         <statistic-card
           title="SOLICITUDES"
           type="primary"

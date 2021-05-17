@@ -11,7 +11,8 @@ import {
   faTimes,
   faCheck,
   faFileAlt,
-  faLongArrowAltRight
+  faLongArrowAltRight,
+  faBars
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -25,6 +26,7 @@ library.add(
   faTimes,
   faCheck,
   faFileAlt,
-  faLongArrowAltRight
+  faLongArrowAltRight,
+  faBars
 )
 Vue.component('fa-icon', FontAwesomeIcon)

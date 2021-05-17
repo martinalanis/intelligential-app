@@ -1,4 +1,4 @@
-# admin
+# Intelligential App
 
 ## Project setup
 ```

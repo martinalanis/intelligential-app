@@ -2,8 +2,8 @@
   <div>
     <template v-if="!loadingInfo">
       <template v-if="items.length">
-        <div class="columns">
-          <div class="column is-flex is-justify-content-space-between is-align-items-center">
+        <div class="columns is-flex is-centered">
+          <div class="column section-header">
             <p>Creditos solicitados:</p>
             <div class="field has-addons">
               <div
@@ -116,6 +116,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section-header {
+  display: flex;
+  flex-direction: column;
+  p {
+    margin-bottom: 0.5rem;
+    @media screen and ($media-tablet) {
+      margin-bottom: 0;
+    }
+  }
+  @media screen and ($media-tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 .not-found-label {
   margin-top: 1rem;
   padding: 1rem;

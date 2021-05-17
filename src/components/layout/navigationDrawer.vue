@@ -1,51 +1,59 @@
 <template>
-  <aside class="menu">
-    <header class="menu__header">
-      <img
-        src="@/assets/user.png"
-        alt="user"
-        class="menu__header-image"
-      >
-      <div class="menu__header-info">
-        <h3 class="name">
-          {{ user.name }}
-        </h3>
-        <p class="role">
-          {{ user.role }}
-        </p>
-      </div>
-    </header>
-    <div class="menu__content px-2">
-      <ul class="menu-list">
-        <li
-          v-for="({ to, icon, name }, i) in routes"
-          :key="i"
+  <div>
+    <button class="button icon menu__button" @click="showMenu = !showMenu">
+      <span class="icon">
+        <fa-icon icon="bars" />
+      </span>
+    </button>
+    <aside class="menu" :class="{ 'show': showMenu }">
+      <header class="menu__header">
+        <img
+          src="@/assets/user.png"
+          alt="user"
+          class="menu__header-image"
         >
-          <router-link
-            class="py-3"
-            :to="to"
-            :class="{ 'active has-background-primary': $route.name === name.toLowerCase() }"
+        <div class="menu__header-info">
+          <h3 class="name">
+            {{ user.name }}
+          </h3>
+          <p class="role">
+            {{ user.role }}
+          </p>
+        </div>
+      </header>
+      <div class="menu__content px-2">
+        <ul class="menu-list">
+          <li
+            v-for="({ to, icon, name }, i) in routes"
+            :key="i"
           >
-            <fa-icon :icon="icon" class="mr-5" />
-            {{ name }}
-          </router-link>
-        </li>
-      </ul>
-    </div>
-    <div class="menu__footer">
-      <button
-        class="button is-small is-fullwidth is-info is-outlined"
-        @click="closeSession"
-      >
-        <span>
-          CERRAR SESIÓN
-        </span>
-        <span class="icon">
-          <fa-icon icon="sign-out-alt" class="ml-3"></fa-icon>
-        </span>
-      </button>
-    </div>
-  </aside>
+            <router-link
+              class="py-3"
+              :to="to"
+              :class="{ 'active has-background-primary': $route.name === name.toLowerCase() }"
+              @click.native="showMenu = false"
+            >
+              <fa-icon :icon="icon" class="mr-5" />
+              {{ name }}
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="menu__footer">
+        <button
+          class="button is-small is-fullwidth is-info is-outlined"
+          @click="closeSession();showMenu = false"
+        >
+          <span>
+            CERRAR SESIÓN
+          </span>
+          <span class="icon">
+            <fa-icon icon="sign-out-alt" class="ml-3"></fa-icon>
+          </span>
+        </button>
+      </div>
+    </aside>
+  </div>
 </template>
 
 <script>
@@ -54,6 +62,7 @@ export default {
   name: 'NavigationDrawer',
   data () {
     return {
+      showMenu: false,
       links: [
         {
           to: '/',
@@ -69,7 +78,7 @@ export default {
         },
         {
           to: '/solicitudes',
-          icon: 'columns',
+          icon: 'file-alt',
           name: 'Solicitudes',
           role: ['administrador']
         },
@@ -112,6 +121,20 @@ export default {
   display: flex;
   flex-direction: column;
   box-shadow: $box-shadow;
+  transition: transform 0.3s ease-out;
+  z-index: 200;
+  &__button {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 200;
+    @media screen and ($media-desktop) {
+      display: none;
+    }
+  }
+  &.show {
+    transform: translateX($drawer-width);
+  }
   @media screen and ($media-desktop) {
     transform: translateX($drawer-width);
   }
@@ -147,11 +170,8 @@ export default {
       color: #545657;
       font-weight: 500;
       font-size: 1rem;
-      // padding-left: 1rem;
-      // padding-right: 1rem;
       &.active {
         color: #ffffff;
-        // background: lighten(purple, 15%);
       }
     }
   }

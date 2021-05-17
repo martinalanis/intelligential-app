@@ -89,19 +89,32 @@ export default {
           resolve([
             {
               item: 'Pendientes',
-              value: DB.users.filter(user => user.role === 'pending').length
+              value: DB.credits.filter(credit => credit.status === 'pending').length
             },
             {
               item: 'Aprobados',
-              value: DB.users.filter(user => user.role === 'approved').length
+              value: DB.credits.filter(credit => credit.status === 'approved').length
             },
             {
               item: 'Rechazados',
-              value: DB.users.filter(user => user.role === 'rejected').length
+              value: DB.credits.filter(credit => credit.status === 'rejected').length
             }
           ])
         } else {
-          reject(new Error('No se encontraron registros'))
+          resolve([
+            {
+              item: 'Pendientes',
+              value: 0
+            },
+            {
+              item: 'Aprobados',
+              value: 0
+            },
+            {
+              item: 'Rechazados',
+              value: 0
+            }
+          ])
         }
         localStorage.setItem(
           'intelligentialDB',

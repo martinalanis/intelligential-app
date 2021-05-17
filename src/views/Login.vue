@@ -1,7 +1,7 @@
 <template>
   <div class="container h-full">
-    <div class="columns is-centered is-vcentered h-100">
-      <div class="column is-4">
+    <div class="columns is-flex is-justify-content-center is-align-items-center h-100">
+      <div class="column is-11-mobile is-6-tablet is-4-desktop">
         <h4 class="has-text-grey">Finantial App</h4>
         <h1 class="title has-text-primary-dark mb-5">INTELLIGENTIAL</h1>
         <div class="card mb-5">

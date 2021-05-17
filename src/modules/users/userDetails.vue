@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <div class="columns">
+    <div class="columns is-multiline">
       <div class="column is-4">
         <h3 class="user__name">
           {{ user.name }}
